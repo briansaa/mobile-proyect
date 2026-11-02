@@ -1,16 +1,52 @@
-# flutter_application_1
+# Mi Ubicación · App Flutter con login y mapa
 
-A new Flutter project.
+App móvil en **Flutter** con flujo completo de autenticación (splash, login, registro y cierre de sesión), pantalla principal con perfil y ajustes, y **mapa con la ubicación actual** del usuario.
 
-## Getting Started
+<img src="docs/login.jpg" alt="Login" width="260">
 
-This project is a starting point for a Flutter application.
+## Funcionalidades
 
-A few resources to get you started if this is your first Flutter project:
+- **Splash** que verifica si hay sesión y redirige a login o al inicio.
+- **Login y registro** con validación de formularios: formato de email, longitud de contraseña, confirmación y aceptación de términos.
+- Servicio de autenticación (`AuthService`, singleton) con sesión en memoria. Está preparado para conectar **Firebase Auth**: las dependencias ya están en `pubspec.yaml` y los puntos de integración marcados en el código.
+- Pantalla principal con navegación inferior, perfil y ajustes.
+- **Mapa** (Google Maps) con la ubicación actual, permisos de ubicación y geocodificación de la dirección.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Stack
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Flutter 3 · Dart 3 · Material 3 · google_maps_flutter · geolocator · geocoding · permission_handler
+
+## Cómo correrlo
+
+```bash
+flutter pub get
+flutter run
+```
+
+Para el mapa en Android, agrega tu clave en `android/local.properties`:
+
+```
+MAPS_API_KEY=tu_clave
+```
+
+### Calidad
+
+```bash
+flutter analyze   # sin issues
+flutter test      # pruebas del login
+```
+
+## Estructura
+
+```
+lib/
+├── main.dart                    # tema, rutas y splash
+├── services/auth_service.dart   # autenticación (singleton)
+├── screens/auth/                # login y registro
+├── screens/home/                # inicio, perfil, ajustes y mapa
+└── widgets/custom_button.dart
+```
+
+## Autor
+
+**[Brian Saavedra](https://github.com/briansaa)**

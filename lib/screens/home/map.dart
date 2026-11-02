@@ -5,14 +5,16 @@ import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapScreen extends StatefulWidget {
+  const MapScreen({super.key});
+
   @override
-  _MapScreenState createState() => _MapScreenState();
+  State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
   GoogleMapController? _mapController;
   Position? _currentPosition;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   String _currentAddress = "Obteniendo dirección...";
   bool _isLoading = true;
   bool _isLocationEnabled = false;
@@ -60,7 +62,7 @@ class _MapScreenState extends State<MapScreen> {
       // Obtener ubicación actual
       await _getCurrentLocation();
     } catch (e) {
-      print('Error al obtener ubicación: $e');
+      debugPrint('Error al obtener ubicación: $e');
       setState(() {
         _isLoading = false;
       });
@@ -72,7 +74,7 @@ class _MapScreenState extends State<MapScreen> {
   Future<void> _getCurrentLocation() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high,
+        locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
       );
 
       setState(() {
@@ -99,7 +101,7 @@ class _MapScreenState extends State<MapScreen> {
         );
       }
     } catch (e) {
-      print('Error al obtener posición: $e');
+      debugPrint('Error al obtener posición: $e');
       setState(() {
         _isLoading = false;
       });
@@ -148,7 +150,7 @@ class _MapScreenState extends State<MapScreen> {
         }
       }
     } catch (e) {
-      print('Error al obtener dirección: $e');
+      debugPrint('Error al obtener dirección: $e');
       setState(() {
         _currentAddress = "Dirección no disponible";
       });
@@ -303,7 +305,7 @@ class _MapScreenState extends State<MapScreen> {
           // Indicador de carga
           if (_isLoading)
             Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               child: Center(
                 child: Container(
                   padding: EdgeInsets.all(20),
@@ -336,7 +338,7 @@ class _MapScreenState extends State<MapScreen> {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: Offset(0, 5),
                     ),
@@ -406,8 +408,8 @@ class _MapScreenState extends State<MapScreen> {
                   );
                 }
               },
-              child: Icon(Icons.my_location),
               backgroundColor: Colors.blue,
+              child: Icon(Icons.my_location),
             )
           : null,
     );

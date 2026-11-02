@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import '../auth/register.dart'; // Importar la pantalla de registro
+import '../../services/auth_service.dart';
+import '../auth/register.dart';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -26,26 +29,18 @@ class _LoginScreenState extends State<LoginScreen> {
         _isLoading = true;
       });
 
-      try {
-        // Aquí iría tu lógica de autenticación
-        // Por ejemplo: await FirebaseAuth.instance.signInWithEmailAndPassword(...)
-
-        await Future.delayed(Duration(seconds: 2)); // Simular delay de red
-
-        // Navegar a la pantalla principal después del login exitoso
-        // Navigator.pushReplacementNamed(context, '/home');
-
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Login exitoso')));
-      } catch (e) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error en el login: $e')));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+      // Antes el login solo mostraba un aviso y nunca entraba a la app.
+      final result = await AuthService().login(
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result.message)));
+      if (result.success) {
+        Navigator.pushReplacementNamed(context, '/home');
       }
     }
   }

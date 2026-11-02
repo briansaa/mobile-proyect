@@ -3,8 +3,10 @@ import '../../services/auth_service.dart';
 import '../home/map.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -39,10 +41,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                Navigator.of(context).pop();
+                final navigator = Navigator.of(context);
+                navigator.pop();
                 await _authService.logout();
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
+                navigator.pushNamedAndRemoveUntil(
                   '/login',
                   (route) => false,
                 );
@@ -145,6 +147,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
 // Página del Dashboard
 class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final user = AuthService().currentUser;
@@ -182,7 +186,7 @@ class DashboardPage extends StatelessWidget {
                   user ?? 'Usuario',
                   style: TextStyle(
                     fontSize: 18,
-                    color: Colors.white.withOpacity(0.9),
+                    color: Colors.white.withValues(alpha: 0.9),
                   ),
                 ),
                 SizedBox(height: 12),
@@ -190,7 +194,7 @@ class DashboardPage extends StatelessWidget {
                   'Bienvenido de vuelta a la aplicación',
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.white.withValues(alpha: 0.8),
                   ),
                 ),
               ],
@@ -290,7 +294,7 @@ class DashboardPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 10,
               offset: Offset(0, 5),
             ),
@@ -302,7 +306,7 @@ class DashboardPage extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
+                color: color.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(50),
               ),
               child: Icon(icon, size: 32, color: color),
@@ -365,6 +369,8 @@ class DashboardPage extends StatelessWidget {
 
 // Página del Perfil
 class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final user = AuthService().currentUser;
@@ -519,8 +525,10 @@ class ProfilePage extends StatelessWidget {
 
 // Página de Configuración
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
   @override
-  _SettingsPageState createState() => _SettingsPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
