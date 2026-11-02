@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../services/auth_service.dart';
 
 class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
   @override
-  _RegisterScreenState createState() => _RegisterScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
@@ -38,26 +41,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
         _isLoading = true;
       });
 
-      try {
-        // Aquí iría tu lógica de registro
-        // Por ejemplo: await FirebaseAuth.instance.createUserWithEmailAndPassword(...)
-
-        await Future.delayed(Duration(seconds: 2)); // Simular delay de red
-
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Registro exitoso')));
-
-        // Regresar a login después del registro exitoso
-        Navigator.pop(context);
-      } catch (e) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Error en el registro: $e')));
-      } finally {
-        setState(() {
-          _isLoading = false;
-        });
+      final result = await AuthService().register(
+        _nameController.text.trim(),
+        _emailController.text.trim(),
+        _passwordController.text,
+      );
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result.message)));
+      if (result.success) {
+        Navigator.pop(context); // vuelve al login
       }
     }
   }

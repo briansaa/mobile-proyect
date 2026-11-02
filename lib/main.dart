@@ -9,6 +9,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +31,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: Colors.blue[600],
             foregroundColor: Colors.white,
             elevation: 2,
-            shadowColor: Colors.blue.withOpacity(0.3),
+            shadowColor: Colors.blue.withValues(alpha: 0.3),
             textStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
@@ -98,8 +100,10 @@ class MyApp extends StatelessWidget {
 
 // Pantalla de splash para verificar autenticación
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
@@ -113,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // Simular verificación de autenticación
     await Future.delayed(Duration(seconds: 2));
 
-    // Verificar si el usuario está logueado
+    if (!mounted) return;
     if (AuthService().isLoggedIn) {
       Navigator.pushReplacementNamed(context, '/home');
     } else {
@@ -138,7 +142,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 borderRadius: BorderRadius.circular(30),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 20,
                     offset: Offset(0, 10),
                   ),
@@ -166,7 +170,7 @@ class _SplashScreenState extends State<SplashScreen> {
               'Bienvenido',
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withValues(alpha: 0.8),
               ),
             ),
             SizedBox(height: 50),

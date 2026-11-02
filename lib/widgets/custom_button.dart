@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
   final double elevation;
 
   const CustomButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.isLoading = false,
@@ -28,7 +28,7 @@ class CustomButton extends StatelessWidget {
     this.padding,
     this.borderRadius,
     this.elevation = 2,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class CustomButton extends StatelessWidget {
     final buttonTextColor = textColor ?? 
         (isOutlined ? primaryColor : Colors.white);
 
-    return Container(
+    return SizedBox(
       width: width,
       height: height,
       child: isOutlined ? _buildOutlinedButton(primaryColor, buttonTextColor) 
@@ -52,7 +52,7 @@ class CustomButton extends StatelessWidget {
         backgroundColor: primaryColor,
         foregroundColor: buttonTextColor,
         elevation: elevation,
-        shadowColor: primaryColor.withOpacity(0.3),
+        shadowColor: primaryColor.withValues(alpha: 0.3),
         padding: padding ?? EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: borderRadius ?? BorderRadius.circular(12),
@@ -133,7 +133,7 @@ class GradientButton extends StatelessWidget {
   final BorderRadius? borderRadius;
 
   const GradientButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.isLoading = false,
@@ -143,7 +143,7 @@ class GradientButton extends StatelessWidget {
     this.height = 50,
     this.padding,
     this.borderRadius,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +161,7 @@ class GradientButton extends StatelessWidget {
         borderRadius: borderRadius ?? BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: gradientColors.first.withOpacity(0.3),
+            color: gradientColors.first.withValues(alpha: 0.3),
             blurRadius: 8,
             offset: Offset(0, 4),
           ),
@@ -236,7 +236,7 @@ class CustomTextButton extends StatelessWidget {
   final bool underline;
 
   const CustomTextButton({
-    Key? key,
+    super.key,
     required this.text,
     this.onPressed,
     this.textColor,
@@ -244,7 +244,7 @@ class CustomTextButton extends StatelessWidget {
     this.fontSize = 14,
     this.icon,
     this.underline = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -294,7 +294,7 @@ class CustomFloatingActionButton extends StatelessWidget {
   final bool mini;
 
   const CustomFloatingActionButton({
-    Key? key,
+    super.key,
     this.onPressed,
     required this.icon,
     this.backgroundColor,
@@ -302,7 +302,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     this.size = 56,
     this.tooltip,
     this.mini = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -310,7 +310,7 @@ class CustomFloatingActionButton extends StatelessWidget {
     final fabBackgroundColor = backgroundColor ?? theme.primaryColor;
     final fabIconColor = iconColor ?? Colors.white;
 
-    return Container(
+    return SizedBox(
       width: mini ? 40 : size,
       height: mini ? 40 : size,
       child: FloatingActionButton(
